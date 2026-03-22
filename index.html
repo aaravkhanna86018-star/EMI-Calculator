@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMI कैलकुलेटर इंडिया</title>
+<meta name="description" content="फ्री EMI कैलकुलेटर जो आसानी से लोन EMI, इंटरेस्ट और टोटल पेमेंट कैलकुलेट करता है।">
+<meta name="keywords" content="EMI Calculator, Loan Calculator India, Home Loan EMI, Car Loan EMI">
+<meta name="author" content="Aarav Khanna">
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin-top: 50px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+input, button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+button {
+  background: white;
+  color: #333;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover { background: #f0f0f0; }
+.section { display: none; margin-top: 20px; }
+.active { display: block; }
+.footer { margin-top: 30px; padding-bottom: 20px; }
+.footer a { color: white; margin: 10px; cursor: pointer; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+@media(max-width:400px){ .container{ padding:20px; } }
+</style>
+</head>
+<body>
+
+<!-- EMI कैलकुलेटर -->
+<div id="emi" class="section active">
+  <div class="container">
+    <h2>EMI कैलकुलेटर</h2>
+    <input type="number" id="loan" placeholder="लोन की राशि (₹)">
+    <input type="number" id="rate" placeholder="ब्याज दर (%)">
+    <input type="number" id="time" placeholder="समय (महीने में)">
+    <button onclick="calc()">कैलकुलेट करें</button>
+    <button onclick="clearFields()">साफ़ करें</button>
+    <div id="result" style="margin-top:15px; font-weight:bold;"></div>
+  </div>
+  <p style="max-width:400px; margin:auto; margin-top:20px; font-size:14px;">
+    यह EMI कैलकुलेटर एक सरल टूल है जिससे आप अपने लोन की EMI, टोटल पेमेंट और ब्याज आसानी से कैलकुलेट कर सकते हैं।
+  </p>
+</div>
+
+<!-- About सेक्शन -->
+<div id="about" class="section">
+  <div class="container">
+    <h1>हमारे बारे में</h1>
+    <p>यह वेबसाइट एक सरल EMI कैलकुलेटर टूल प्रदान करती है जिससे आप लोन की EMI कैलकुलेट कर सकते हैं।</p>
+    <p>इसे होम लोन, कार लोन और पर्सनल लोन के लिए इस्तेमाल किया जा सकता है।</p>
+  </div>
+</div>
+
+<!-- Privacy सेक्शन -->
+<div id="privacy" class="section">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p>हम किसी भी यूजर का व्यक्तिगत डेटा एकत्र नहीं करते।</p>
+  </div>
+</div>
+
+<!-- Contact सेक्शन -->
+<div id="contact" class="section">
+  <div class="container">
+    <h1>संपर्क करें</h1>
+    <p>Email: <a href="mailto:your@email.com" style="color:white;">your@email.com</a></p>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <a onclick="show('emi')">Home</a> |
+  <a onclick="show('about')">About</a> |
+  <a onclick="show('privacy')">Privacy Policy</a> |
+  <a onclick="show('contact')">Contact</a>
+</div>
+
+<script>
+function show(section){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(section).classList.add('active');
+}
+function calc(){
+  let P = document.getElementById("loan").value;
+  let r = document.getElementById("rate").value/12/100;
+  let n = document.getElementById("time").value;
+  if(!P || !r || !n){ 
+    document.getElementById("result").innerHTML="कृपया सभी फील्ड भरें!"; 
+    return; 
+  }
+  let emi = (P*r*Math.pow(1+r,n))/(Math.pow(1+r,n)-1);
+  let total = emi*n;
+  let interest = total-P;
+  document.getElementById("result").innerHTML=
+    "EMI: ₹"+emi.toFixed(2)+"<br>"+
+    "कुल भुगतान: ₹"+total.toFixed(2)+"<br>"+
+    "ब्याज: ₹"+interest.toFixed(2);
+}
+function clearFields(){
+  document.getElementById("loan").value="";
+  document.getElementById("rate").value="";
+  document.getElementById("time").value="";
+  document.getElementById("result").innerHTML="";
+}
+</script>
+</body>
+</html>
